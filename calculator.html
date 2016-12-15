@@ -1,12 +1,11 @@
 <!doctype html>
 <html lang="en">
-
 <center>
-<body background="http://2.bp.blogspot.com/-htw4BmJx2RM/T9F7DupUgPI/AAAAAAAAB04/Vgu4BpaWT8w/s1600/board-black-series-texture-background-wood-wallpaper-wood-texture-wallpapers-476.jpg"></body>
+<body background=""></body>
 </center>
 <head>
     <meta charset="UTF-8">
-    <title>Color Changer</title>
+    <title>Calculator</title>
     <link rel="stylesheet" href="navbar.css" type="text/css" />
     <style>
         .container > * {
@@ -18,23 +17,38 @@
         }
     </style>
 </head>
-<h1><font color="white">Hardware Page</font></h1>
+<h1><font color="black">Calculator</font></h1>
 <body>
     <ul id="navbar">
         <li><a href="index.html"> Home </a></li>
         <li><a href="aboutme.html"> About Me </a></li>
         <li><a href="hardware.html"> Hardware </a></li>
         <li><a href="howto.html"> How To </a></li>
-        <li><a href="calc.html"> Calculator </a></li>
+        <li><a href="calculator.html"> Calculator </a></li>
         <li><a href="todo.html"> Todo List </a></li>
         <li><a href="vind.html"> Vindinium </a></li>
         <li><a href="bigproject.html"> Big Project </a></li>
     </ul>
+</body>
 <body> 
 
-    <input id="newBGColor">
-    <botton id="colorChangeButton"> Change Color!</botton>
+    <input id="num1"/>
+<select id="selector">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">*</option>
+    <option value="/">/</option>
+    <option value="^">^</option>
+    <option value="√">√</option>
+</select>
+    
+    <input id="num2"/>
+        
+        <button id="calculate">calculate</button>
 
-    <script src="changer.js"></script>?
+        <div id ="display"></div>
+
+<script src="calculator.js"></script>
+
 </body>
 </html>
