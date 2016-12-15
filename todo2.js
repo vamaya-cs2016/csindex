@@ -20,6 +20,9 @@ submitBtn.addEventListener("click", function(){
     else if(textstyle.value ==="underline"){
         display.innerHTML += '<div style="text-decoration: underline;">' +newTask+ '</div>';
     }
+    else if(textstyle.value ==="italics"){
+        display.innerHTML += '<div style="font: italic 15px/30px Times New Roman, serif;">' +newTask+ '</div>';
+    }
 });
 
 display.addEventListener("click", function(evt){
