@@ -3,13 +3,14 @@ var selector = document.getElementById("selector");
 var num2input = document.getElementById("num2");
 var calculate = document.getElementById("calculate");
 var display = document.getElementById("display");
-
+//Above it describes the variables that are neccesary for the javascript to work 
 calculate.addEventListener("click", function(){
     var num1 = num1input.value;
     var num2 = num2input.value;
     
     
-    
+//The following if statements are the various functions that the calculator will need in order to perform. 
+//The selector value determines if they either do addition, subtraction, division, multiplication, the square root, or having number do the power of. 
     if(selector.value === "+"){
         var answera = +num1 + +num2;
         display.innerHTML = answera;
