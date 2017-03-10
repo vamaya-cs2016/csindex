@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<center>
+<body background="http://www.vectorsland.com/imgd/l92162-futuristic-background-99429.jpg"></body>
+</center>
+<head>
+    <meta charset="UTF-8">
+    <title>Vindinium</title>
+    <link rel="stylesheet" href="navbar.css" type="text/css" />
+    <style>
+        .container > * {
+            display: inline-block;
+            vertical-align: top;
+        }
+        .white-text {
+            color: white;
+        }
+    </style>
+</head>
+<h1><font color="black">Calculator</font></h1>
+<body>
+    <ul id="navbar">
+        <li><a href="index.html"> Home </a></li>
+        <li><a href="aboutme.html"> About Me </a></li>
+        <li><a href="hardware.html"> Hardware </a></li>
+        <li><a href="howto.html"> How To </a></li>
+        <li><a href="calculator.html"> Calculator </a></li>
+        <li><a href="todo.html"> Todo List </a></li>
+        <li><a href="vind.html"> Vindinium </a></li>
+        <li><a href="bigproject.html"> Big Project </a></li>
+    </ul>
+</body>
+<body> 
+<hr>
+<hr>
+<br>
+</br>
+<h2><font color="white">My Code</font></h2>
+    <div class="container white-text">
+        <code>
+           <pre>
+        var Bot = require('bot');
+        var PF = require('pathfinding');
+        //var bot = new Bot('1txgv5sj', 'training', 'http://vindinium.org'); //Put your bot's code here and change training to Arena when you want to fight others.
+        var bot = new Bot('ca6zx0m9', 'training', 'http://v.summitdevclub.com:9000'); //Put your bot's code here and change training to Arena when you want to fight others.
+        var goDir;
+        var Promise = require('bluebird');
+        Bot.prototype.botBrain = function() {
+            return new Promise(function(resolve, reject) {
+            _this = bot;
+            //////* Write your bot below Here *//////
+            //////* Set `myDir` in the direction you want to go and then bot.goDir is set to myDir at the bottom *////////
+
+            /*                                      *
+             * This Code is global data!            *
+             *                                      */
+
+            // Set myDir to what you want and it will set bot.goDir to that direction at the end.  Unless it is "none"
+            var myDir;
+        
+            // This is my bots position the myPos tells what the bots x,y position is 
+            var myPos = [bot.yourBot.pos.x, bot.yourBot.pos.y];
+        
+            // This sees which bot is yours what number ID it has and pushes the other bots as enemy bots.
+            var enemyBots = [];
+            if(bot.yourBot.id != 1) enemyBots.push(bot.bot1);
+            if(bot.yourBot.id != 2) enemyBots.push(bot.bot2);
+            if(bot.yourBot.id != 3) enemyBots.push(bot.bot3);
+            if(bot.yourBot.id != 4) enemyBots.push(bot.bot4);
+        
+            //This part of the code tells the bot to go and get the other bots mines, it identifies which bots to target.
+            var enemyMines = [];
+            enemyMines = enemyBots[0].mines;
+            enemyMines = enemyMines.concat(enemyBots[1].mines)
+            enemyMines = enemyMines.concat(enemyBots[2].mines)
+        
+
+            /*                                      *
+             * This Code Decides WHAT to do         *
+             *                                      */
+            var task = "none"
+        
+            if(bot.freeMines.length > 0){
+                task = "freeMines";
+            }
+            else if(enemyMines.length > 0){
+                task = "enemyMines"
+            }
+            else if (bot.youBot.life > 70){
+                task = "attackBot";
+            }
+            else if (bot.youBot.life <= 40) {
+                task = "closestTavern";
+            }
+            else {
+                task = "freeMines"
+            }
+
+
+
+            /*                                      *
+             * This Code Determines HOW to do it    *
+             *                                      */
+            // This part of the code tells the bot to go get mines that are lying aroung that don't belong to other Bots.
+            if(task === "freeMines"){
+                var freeMines = bot.freeMines[0];
+                    for(var i = 0; i < bot.freeMines.length; i++){
+                    if(bot.findDistance(myPos, freeMines) > bot.findDistance(myPos, bot.freeMines[i])){
+                        freeMines = bot.freeMines[i];
+                    }
+                }
+                console.log("Yay! Collecting a free Mine!");
+                var myDir = bot.findPath(myPos, freeMines);
+            } 
+            // The "enemyMines" portion of the code tells the bot to go towards the enemy bot with the most mines, it targets the bot.
+            if(task === "enemyMines"){
+                var closestenemyMines = enemyMines[0];
+                for(var i = 0; i < enemyMines.length; i++){
+                    if(bot.findDistance(myPos, enemyMines) > bot.findDistance(myPos, enemyMines[i])){
+                        closestenemyMines = enemyMines[i];
+                    }
+                }
+                console.log("Got your mines");
+                var myDir = bot.findPath(myPos, enemyBots);
+            }
+            // "closestTavern" is to tell the bot where to go to get health and recover, this part points it in the right direction.
+            if(task === "closestTavern"){
+                var closestTavern = bot.taverns[0];
+                for(var i = 0; i < bot.taverns.length; i++){
+                    if(bot.findDistance(myPos, closestTavern) > bot.findDistance(myPos, bot.taverns[i])){
+                       closestTavern = bot.taverns[i]; 
+                    }
+                    
+                }
+                console.log("Good to be healthy");
+                var myDir = bot.findPath(myPos, enemyBots)
+            }
+            // This part of the code is what tells the bot to attack and take the bots mines, the first portion was "enemyMines" above which just told the bot where to go but this part tells the bot to attack.
+            if(task === "attackBot"){
+                var closestBot = enemyBots[0];
+                for(var i = 0; i < bot.enemyBots.length; i++){
+                    if(bot.findDistance(myPos, closestBot.posArray) > bot.findDistance(myPos, bot.enemyBots[i])){
+                    
+                    }
+                }
+            }
+        
+            if(task === "none") {
+                console.log("Going Random!");
+                var rand = Math.floor(Math.random() * 4);
+                var dirs = ["north", "south", "east", "west"];
+                myDir = dirs[rand];
+            }
+
+
+
+
+            /*                                                                          *
+             * This Code Sets your direction based on myDir. Change if you want.        */
+
+            bot.goDir = myDir;
+
+            ///////////* DON'T REMOVE ANTYTHING BELOW THIS LINE *//////////////
+            resolve();
+        });
+    }
+    bot.runGame();
+           </pre>
+   
+        </code>
+    </div>
+<br>
+</br>
+<hr>
+<hr>
+<h2><font color="white">What is Vindinium</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-08 at 11.35.02 AM.jpg" height="300" width="500" >
+        <p style="width: 60%">
+        Vindinium is where we test and fight out bots, it offers an outlet for the AI programs to fight and win. Since vindinium already has some set variables that help the AI move around and interact with the environment. Then setting the code in javascript it implimenting the tasks that go along with the variables and tasks that the AI bot needs to complete. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color="white">Bot Tasks</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-07 at 11.45.51 AM.jpg" height="290" width="270" >
+        <p style="width: 60%">
+        This piece of code is what makes the bots decisions. Its what tells the bot to go to a tavern if its health is below a certian amount. It tells the bot what its tasks are what it needs to do and where to go. Making this it was important to consider what amount of minimum health to tell the bot when to go to the taverns. Setting it to less then 40 was an obvious choice since the bot would be very vulnerable and on the verge of death if its health was that low, it would then seek out the closest tavern to heal. I also put in that if the bot has more than 70 in health that is has the task of attacking the nearest bot and taking its mines. All of these are conditional tasks that affect each other. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color="white">Free Mines</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-07 at 11.46.07 AM.jpg" height="180" width="500" >
+        <p style="width: 60%">
+        For the "freeMines" task it makes the bot go for the nearest free mine that is not yet owned by another bot. It tells the bot to collect as many of the mines as possible as long as it is close to it. The part that says findDistance finds the distance from the bot to the freeMine, so if there are multiple mines it will help the bot decide which one to go to based on its proximity. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color="white">Enemy Mines</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-07 at 11.46.19 AM.jpg" height="190" width="570" >
+        <p style="width: 60%">
+        "enemyMines" is what tells the bot to go after another bot based on the amount of mines that bot has in its posetion. Similar to the freeMines portion of the code this part has something similar it uses the same findDistance as the freeMines except it uses it to find the position of the closest bot with the most mines. It then tasks it with going to the closest bot with mines, and taking their mines. After it has its mines it made it say "Got your Mines", it was appropriate to say and seamed like a good one liner. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color="white">Taverns</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-07 at 11.46.31 AM.jpg" height="200" width="490" >
+        <p style="width: 60%">
+        The "closestTavern" part of the code tells the bot to go for the closest tavern when it needs to be healed. In a previous portion of the code where it decides what tasks to perform based on conditions, if the bot's health is 40 or below then the bot's task becomes "closestTaverns" where this piece of code takes over. Using the same findDistance it finds the position of the closest tavern and goes to it. However this only becomes true when the bot has less than 40 health if it has more than that then the bot will not go to a tavern.
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color="white">Attacking Bots</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-07 at 11.47.10 AM.jpg" height="180" width="520" >
+        <p style="width: 60%">
+        When the "attackBot" part of the code takes over it is similar to going to taverns, the bot only performs the task if it has a certian amount of health and if there isn't any other task it needs to complete. If the bot has 70 or more in health then it has the task of attacking other bots and taking their mine's. It uses the same findDistance and closestBot.posArray to find the closest bot to attack, similar to the one that the rest of the tasks use to find freeMines and taverns. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color="white">None</font></h2>
+    <div class="container white-text">
+        <img src="Screenshot 2017-03-07 at 11.47.42 AM.jpg" height="160" width="350" >
+        <p style="width: 60%">
+        In the final part of the code the none task it exactly what you would expect it to be the bot roaming around until it finds a different task. The bot randomly picks a different direction to go in until it finds a different task. The "var rand" tells the bot to mathmatically pick a different random direction, the bot chooses from North, South, East, and West. It is important for the bot to keep moving even if it does not have a task it increases the chance of finding mines and tasks for the bot to complete. If the bot doesn't move then it won't find new tasks and it also increases the chances of the bot being spotted and attacked by another bot making this one of the most important pieces of the code. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h2><font color ="white">What I learned</font></h2>
+    <div class="container white-text">
+        <p style="width: 60%">
+        What I learned about AI first of all that it is very hard and complex, difficult to understand as well. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<hr>
+</body>
+</html>
