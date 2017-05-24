@@ -50,7 +50,7 @@
         
         <div id="part"></div>
         
-        <div id="totalprice"><h3><font color="white">Total = </font></h3></div>
+        <h3><font color="white">Total = </font></h3><div id="totalprice" class="container white-text">0</div>
 
 <script src="options.js"></script>
 
@@ -74,7 +74,7 @@
         
         <button id="calculate">calculate</button>
 
-        <div id ="display"></div>
+        <div id ="display" class="container white-text"></div>
 
 <script src="calculator.js"></script>
 <br>
@@ -93,7 +93,7 @@
 
     <button id="submitBtn">submit</button>
 
-    <div id ="display"></div>
+    <div id ="display" class="container white-text"></div>
 </div>
 
 <script src="todo2.js"></script>
@@ -101,5 +101,38 @@
 <hr>
 <hr>
 
+<h2><font color="white">How to: How I made Images appear and disapear using Javascript?</font></h3>
+<br>
+</br>
+<h3><font color ="white">Step 1: Describing Variables</font></h3>
+    <div class="container white-text">
+        <img src="Screenshot 2017-05-24 at 10.53.36 AM.jpg" height="140" width="340" >
+        <p style="width: 60%">
+        The first step in creating the Javascript for the car part shopping cart. All variables in a proper javascript need to be defined in order for the code to work properly, and perform as it needs to perform. The variables "part" and "carpart" both variables used to define and identify certian pieces of code that are in the HTML portion of the website. The "carpart" variable defines the selector that the user will use to select the carpart that he/she wants to add to their order, the selector puts out the options the user can choose from. Once the user chooses one the part that they want they simply click on "Add Part" and the part is added to their shopping cart along with a discription of the power it puts out. The id tag "part" is the display where the image of the engine shows up once the user clicks add part. The "Add Part" button is an event listener that only responds to the selector with the id tag "carpart". The "addpart" id refers to the button that is clicked to notify the javascript to add the part that the user has chosen, it is used throughout the javascript. The "totalprice" refers to the total amount that will be added up in parts in the shopping cart.
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h3><font color ="white">Step 2: Creating images using Javascript</font></h3>
+    <div class="container white-text">
+        <img src="Screenshot 2017-05-23 at 11.45.20 AM.jpg" height="270" width="360" >
+        <p style="width: 60%">
+        The code shown on the left demonstrates the javascript for the selector with the id "carpart", this code displays the options from the dropdown selector. These two sections of javascript tell the system to add the image when the user selects the car part and clicks add part. the "addpart = document.createElement("img");" tells the code that there will be an image created and that it should be displayed in the "part" display. Then you need to attach the source image which will appear on the screen, providing a source for the image will insure that it appears correctly, you can also control the size of the image by limiting the Px and either making either the image appear larger or smaller. 
+        </p>
+    </div>
+<br>
+</br>
+<hr>
+<h3><font color ="white">Step 3: Removing images using Javascript</font></h3>
+    <div class="container white-text">
+        <img src="Screenshot 2017-05-23 at 11.45.31 AM.jpg" height="130" width="350" >
+        <p style="width: 60%">
+        
+        </p>
+    </div>
+<br>
+</br>
+<hr>
 </body>
 </html>
